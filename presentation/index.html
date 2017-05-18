@@ -1,0 +1,184 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="clm-swipe-next" content="">
+    <meta name="clm-swipe-previous" content="">
+    <meta name="clm" content="">
+    <title></title>
+    <link href="css/main.css" rel="stylesheet" />
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="css/template.css" rel="stylesheet">
+</head>
+<body>
+    <div id="background">
+        <div class="row" style="margin:5px;">
+            <div class="col-md-3">
+                <button class="btn btn-default" style="width:100%;" id="send">send</button><br /><br />
+            </div>
+            <div class="col-md-9" id="response">
+                
+            </div>
+        </div>
+    </div>
+    <script src="js/jquery-2.1.1.min.js"></script>
+    <script charset="utf-8" src="js/storyclm-1.6.0.js?v=25B7123444BCB844444444446B5340C8BD42qwerqwerqwer3FD7BAB24AF81we"></script>
+    <script charset="utf-8" src="js/storyClient-0.0.1.js?v=25Brqwer566777qwe40C8B444444444dsfgsdfgrdfgsdfsdfBAB24AF81we"></script>
+    <script src="js/bootstrap.js"></script>
+    <script>
+
+        var tableId = 23;
+
+        function getProfile() {
+            return {
+                Name: "Insert",
+                Age: 10000,
+                Gender: true,
+                Rating: 100.001,
+                Created: "2017-05-03T00:00:00Z",
+            };
+        }
+
+        function updateProfile(profile) {
+            profile.Name = "Update";
+            profile.Age = 22222222;
+            profile.Gender = false;
+            profile.Rating =  222.2222;
+            profile.Created = "2018-08-03T00:00:00Z";
+            return profile;
+        }
+
+        function getProfiles() {
+            let result = [];
+            for (let i = 0; i < 4; i++) {
+                result.push(getProfile());
+            }
+            return result;
+        }
+
+        function updateProfiles(profiles) {
+            profiles.forEach((profile) => {
+                updateProfile(profile);
+            });
+            return profiles;
+        }
+
+        function writeResult(result) {
+            $("#response").html("<pre>" + JSON.stringify(result, null, 4) + "</pre>");
+        }
+
+        function writeLoading(result) {
+            $("#response").html("Loading...");
+        }
+
+        function insert(client) {
+            writeLoading();
+            client.insert(tableId, getProfile(), (result) => {
+                writeResult(result);
+            });
+        }
+
+        function insertMany(client) {
+            writeLoading();
+            client.insertMany(tableId, getProfiles(), (result) => {
+                writeResult(result);
+            });
+        }
+
+        function update(client) {
+            writeLoading();
+            client.insert(tableId, getProfile(), (result) => {
+                client.update(tableId, updateProfile(result), (res) => {
+                    writeResult(res);
+                });
+            });
+        }
+
+        function updateMany(client) {
+            writeLoading();
+            client.insertMany(tableId, getProfiles(), (result) => {
+                client.updateMany(tableId, updateProfiles(result), (res) => {
+                    writeResult(res);
+                });
+            });
+        }
+
+        function count(client) {
+            writeLoading();
+            client.count(tableId, (result) => {
+                writeResult(result);
+            });
+        }
+
+
+        function countByQuery(client) {
+            writeLoading();
+            client.countByQuery(tableId, "[Gender][eq][false]", (result) => {
+                writeResult(result);
+            });
+        }
+
+        function findAll(client) {
+            writeLoading();
+            client.findAll(tableId, 0, 1000, (result) => {
+                writeResult(result);
+            });
+        }
+
+        function find(client) {
+            writeLoading();
+            client.find("sdfsad", "[Gender][eq][false]", 0, 1000, "Gender", 1, (result) => {
+                writeResult(result);
+            });
+        }
+
+        function findById(client) {
+            writeLoading();
+            client.findById(tableId, "591c22888d0b343140005b64", (result) => {
+                writeResult(result);
+            });
+        }
+
+        function findByIds(client) {
+            writeLoading();
+            client.findByIds(tableId, ["591c22888d0b343140005b64", "591c228a8d0b343140005b74", "591b7b6c8d0b341c38d6b009"], (result) => {
+                writeResult(result);
+            });
+        }
+
+        function deleteById(client) {
+            writeLoading();
+            client.delete(tableId, "591c22888d0b343140005b64", (result) => {
+                writeResult(result);
+            });
+        }
+
+        function deleteByIds(client) {
+            writeLoading();
+            client.deleteMany(tableId, ["591c228a8d0b343140005b74", "591b7b6c8d0b341c38d6b009"], (result) => {
+                writeResult(result);
+            });
+        }
+
+        $(function () {
+            var client = new storyCLient("client_18", "595a2fb724604e51a1f9e43b808c76c915c2e0f74e8840b384218a0e354f6de6");
+            try {
+                find(client);
+            }
+            catch (ex) {
+                console.log(ex);
+            }
+            $("#send").on("click", () => {
+                client.auth((response) => {
+                    
+                });
+            });
+        });
+
+    </script>
+</body>
+</html>
