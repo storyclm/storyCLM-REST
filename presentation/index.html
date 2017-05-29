@@ -26,8 +26,8 @@
         </div>
     </div>
     <script src="js/jquery-2.1.1.min.js"></script>
-    <script src="js/storyclm-1.6.0.js?v=F03FAA2318C040EE8FC0272948C95FF53"></script>
-    <script src="js/storyCLMCLient-1.0.0.js?v=F03FAA2318C040EE8FC0272948C95FF5133"></script>
+    <script src="js/storyclm-1.6.0.js?v=F03FAA2318C040EE8FC0272948C9545FF53"></script>
+    <script src="js/storyCLMCLient-1.0.0.js?v=F03FAA2318C040EE8FC024572948C95FF5133"></script>
     <script src="js/bootstrap.js"></script>
     <script>
 
@@ -152,9 +152,9 @@
                 });
         }
 
-        function findAll(client) {
+        function find(client) {
             writeLoading();
-            client.findAll(tableId, 0, 1000,
+            client.find(tableId, "[Gender][eq][false]", 0, 1000, "Gender", 1,
                 (result) => {
                     writeResult(result);
                 },
@@ -163,9 +163,9 @@
                 });
         }
 
-        function find(client) {
+        function findAlt(client) {
             writeLoading();
-            client.find(tableId, "[Gender][eq][false]", 0, 1000, "Gender", 1,
+            client.find(tableId, "", 0, 1000, "Gender", 1,
                 (result) => {
                     writeResult(result);
                 },
@@ -223,7 +223,7 @@
             $("#send").on("click", () => {
                 client.auth((response) => {
 
-                    insertMany(client);
+                    findAlt(client);
 
                 }, (ex) => {
                         alert(ex.message);

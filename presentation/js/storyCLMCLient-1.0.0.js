@@ -136,57 +136,12 @@ storyCLMCLient.prototype = {
         }
     },
 
-    count: function (tableId, handler, fail) {
+    count: function (tableId, tablesQuery, handler, fail) {
         try {
             let self = this;
             if (typeof tableId !== "number") self.throwArgumentException("tableId");
-            let url = self.endpoints.api + self.parts.tables + tableId + `/count`;
-            StoryCLM.Http.Get(url, self.getHeaders(false), function (message) {
-                try {
-                    self.checkResponse(message);
-                    let result = self.decodeJson(message.data.body);
-                    if (typeof handler === "function") handler(result);
-                }
-                catch (ex) {
-                    if (typeof fail === "function") fail(ex);
-                }
-            });
-        }
-        catch (ex) {
-            if (typeof fail === "function") fail(ex);
-        }
-    },
-
-    countByQuery: function (tableId, tablesQuery, handler, fail) {
-        try {
-            let self = this;
-            if (typeof tableId !== "number") self.throwArgumentException("tableId");
-            if (typeof tablesQuery === "undefined") self.throwArgumentException("tablesQuery");
-            let query = self.encodeText(tablesQuery);
-            let url = self.endpoints.api + self.parts.tables + tableId + `/countbyquery/${query}`;
-            StoryCLM.Http.Get(url, self.getHeaders(false), function (message) {
-                try {
-                    self.checkResponse(message);
-                    let result = self.decodeJson(message.data.body);
-                    if (typeof handler === "function") handler(result);
-                }
-                catch (ex) {
-                    if (typeof fail === "function") fail(ex);
-                }
-            });
-        }
-        catch (ex) {
-            if (typeof fail === "function") fail(ex);
-        }
-    },
-
-    findAll: function (tableId, skip, take, handler, fail) {
-        try {
-            let self = this;
-            if (typeof tableId !== "number") self.throwArgumentException("tableId");
-            if (typeof skip !== "number") self.throwArgumentException("skip");
-            if (typeof take !== "number") self.throwArgumentException("take");
-            let url = self.endpoints.api + self.parts.tables + tableId + `/findall/${skip}/${take}`;
+            var q = tablesQuery === "" ? "" : `?query=${tablesQuery}`;
+            let url = self.endpoints.api + self.parts.tables + tableId + `/count${q}`;
             StoryCLM.Http.Get(url, self.getHeaders(false), function (message) {
                 try {
                     self.checkResponse(message);
@@ -212,7 +167,8 @@ storyCLMCLient.prototype = {
             if (typeof skip !== "number") self.throwArgumentException("skip");
             if (typeof take !== "number") self.throwArgumentException("take");
             if (typeof sort !== "number") self.throwArgumentException("sort");
-            let url = self.endpoints.api + self.parts.tables + tableId + `/find/${tablesQuery}/${sortField}/${sort}/${skip}/${take}`;
+            var q = tablesQuery === "" ? "" : `&query=${tablesQuery}`;
+            let url = self.endpoints.api + self.parts.tables + tableId + `/find?skip=${skip}&take=${take}&sort=${sort}&sortfield=${sortField}${q}`;
             StoryCLM.Http.Get(url, self.getHeaders(false), function (message) {
                 try {
                     self.checkResponse(message);
