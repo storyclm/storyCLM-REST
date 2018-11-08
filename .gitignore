@@ -1,0 +1,8 @@
+/.idea
+**/temp
+**/node_modules/*
+Web.config
+*.zip
+/src/apps/storyclm/.settings/org.eclipse.wst.jsdt.ui.superType.name
+/src/apps/storyclm/.settings/org.eclipse.wst.jsdt.ui.superType.container
+/src/apps/storyclm/.settings/.jsdtscope
