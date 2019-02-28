@@ -1,4 +1,4 @@
-import {HttpClient} from "httpClient"
+import {HttpClient} from "./httpClient"
 let authorizationHttpClient = function (accessTokenManager, httpClient) {
     httpClient = httpClient || new HttpClient();
     httpClient.setInterceptor(

@@ -7,12 +7,12 @@
 //requestCreator - создатель запросов  - та самая платформозависимая штука
 
 import promiseRepeater from "promiseRepeater";
-import  requestCreator from "requestCreator";
+import requestCreator from "requestCreator";
 import  param from 'jquery-param';
 export let noInternetException = function (error) {
         this.error = error;
     };
-export  let HttpClient = function () {
+export let HttpClient = function () {
 
     var self = this;
 

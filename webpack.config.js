@@ -1,10 +1,15 @@
-"use strict"
+ "use strict"
 const path = require('path');
+var libraryName = 'storyCLM-REST';
 
 module.exports = {
-    entry: './src/index.js',
+    entry: __dirname + '/src/index.js',
     output: {
-        filename:"bundle.js"
+        path: __dirname + '/lib',
+        filename: "bundle.js",
+        library: libraryName,
+        libraryTarget: 'umd',
+        umdNamedDefine: true
     },
     devtool: "source-map",
     mode: "development",
@@ -16,7 +21,7 @@ module.exports = {
         alias:{
            // querystring: 'querystring-browser',
             requestCreator: path.resolve(__dirname,"src/Http/RequestCreator/Web.js"),
-            promiseRepeater:path.resolve(__dirname,"src/promiseRepeater.js"),
+            promiseRepeater:path.resolve(__dirname,"src/Utils/promiseRepeater.js"),
             httpClient:path.resolve(__dirname,"src/http/httpClient.js"),
             tableClient:path.resolve(__dirname,"src/Tables/tableClient.js"),
             authorizationHttpClient:path.resolve(__dirname,"src/Http/authorizationHttpClient.js"),
@@ -36,7 +41,16 @@ module.exports = {
                         presets: ['C:\\Breffi\\Javascript\\StoryCLM\\node_modules\\babel-preset-env']
                     }
                 }
+            },
+            {
+                test: /(\.jsx|\.js)$/,
+                loader: "eslint-loader",
+                exclude: /node_modules/
             }
         ]
+    },
+    resolve: {
+        root: path.resolve('./src'),
+        extensions: ['', '.js']
     }
 };

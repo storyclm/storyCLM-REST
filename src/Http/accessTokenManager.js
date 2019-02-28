@@ -1,4 +1,4 @@
-import {HttpClient} from "httpClient";
+import {HttpClient} from "./httpClient";
 let  AccessTokenManager = function (clientId, clientSecret) {
     var self = this;
     let httpClient = new HttpClient();
@@ -28,7 +28,7 @@ let  AccessTokenManager = function (clientId, clientSecret) {
                 });
         else
             return Promise.resolve(_authEntity);
-    }
+    };
 
     var login = function () {
         var entity = {
